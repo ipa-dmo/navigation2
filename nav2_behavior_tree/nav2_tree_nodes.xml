@@ -92,6 +92,12 @@
       <output_port name="error_code_id">"Compute path through poses error code"</output_port>
     </Action>
 
+    <Action ID="GetGoalFromGoalsVector">
+      <input_port name="goals">Destinations to plan through</input_port>
+      <input_port name="goal_index">Index of goal to return</input_port>
+      <output_port name="goal">Selected goal</output_port>
+    </Action>
+
     <Action ID="RemovePassedGoals">
       <input_port name="input_goals">Input goals to remove if passed</input_port>
       <input_port name="radius">Radius tolerance on a goal to consider it passed</input_port>

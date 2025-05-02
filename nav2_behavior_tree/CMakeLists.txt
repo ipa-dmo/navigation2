@@ -59,6 +59,9 @@ list(APPEND plugin_libs nav2_compute_path_to_pose_action_bt_node)
 add_library(nav2_compute_path_through_poses_action_bt_node SHARED plugins/action/compute_path_through_poses_action.cpp)
 list(APPEND plugin_libs nav2_compute_path_through_poses_action_bt_node)
 
+add_library(nav2_get_goal_from_goals_vector_action_bt_node SHARED plugins/action/get_goal_from_goals_vector.cpp)
+list(APPEND plugin_libs nav2_get_goal_from_goals_vector_action_bt_node)
+
 add_library(nav2_controller_cancel_bt_node SHARED plugins/action/controller_cancel_node.cpp)
 list(APPEND plugin_libs nav2_controller_cancel_bt_node)
 

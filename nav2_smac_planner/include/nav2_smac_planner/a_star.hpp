@@ -244,6 +244,12 @@ protected:
 
   inline bool onVisitationCheckNode(const NodePtr & node);
 
+  inline void printSearchInfo(const SearchInfo & info)
+  {
+    std::cout << "Astar: Allow Reverse expansion: " << info.allow_reverse_expansion << " Reversing penalty: " << info.reverse_penalty << std::endl;
+    return;
+  };
+
   /**
    * @brief Populate a debug log of expansions for Hybrid-A* for visualization
    * @param node Node expanded

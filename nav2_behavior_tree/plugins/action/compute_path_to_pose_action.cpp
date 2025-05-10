@@ -14,6 +14,7 @@
 
 #include <memory>
 #include <string>
+#include <iostream>
 
 #include "nav2_behavior_tree/plugins/action/compute_path_to_pose_action.hpp"
 
@@ -32,6 +33,7 @@ void ComputePathToPoseAction::on_tick()
 {
   getInput("goal", goal_.goal);
   getInput("planner_id", goal_.planner_id);
+  std::cout << "DEBUG: Planner ID on tick of ComputePathToPoseAction: " << goal_.planner_id << std::endl;
   if (getInput("start", goal_.start)) {
     goal_.use_start = true;
   }

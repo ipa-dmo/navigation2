@@ -18,6 +18,7 @@
 #include <vector>
 #include <algorithm>
 #include <limits>
+#include <rclcpp/logging.hpp>
 
 #include "Eigen/Core"
 #include "nav2_smac_planner/smac_planner_hybrid.hpp"
@@ -167,6 +168,10 @@ void SmacPlannerHybrid::configure(
   nav2_util::declare_parameter_if_not_declared(
     node, name + ".motion_model_for_search", rclcpp::ParameterValue(std::string("DUBIN")));
   node->get_parameter(name + ".motion_model_for_search", _motion_model_for_search);
+  RCLCPP_WARN(
+      _logger,
+      "HybridAstar: Motion model initializing: '%s'",
+      _motion_model_for_search.c_str());
   _motion_model = fromString(_motion_model_for_search);
   if (_motion_model == MotionModel::UNKNOWN) {
     RCLCPP_WARN(
@@ -344,6 +349,7 @@ nav_msgs::msg::Path SmacPlannerHybrid::createPlan(
   std::lock_guard<std::mutex> lock_reinit(_mutex);
   steady_clock::time_point a = steady_clock::now();
 
+  RCLCPP_WARN(_logger, "HybridAstar: Planner modell: parameter: %s internally: %s", _motion_model_for_search.c_str(), toString(_motion_model).c_str());
   std::unique_lock<nav2_costmap_2d::Costmap2D::mutex_t> lock(*(_costmap->getMutex()));
 
   // Downsample costmap, if required
@@ -382,7 +388,7 @@ nav_msgs::msg::Path SmacPlannerHybrid::createPlan(
     orientation_bin -= static_cast<float>(_angle_quantizations);
   }
   _a_star->setStart(mx_start, my_start, static_cast<unsigned int>(orientation_bin));
-
+  
   // Set goal point, in A* bin search coordinates
   if (!costmap->worldToMapContinuous(
     goal.pose.position.x,
@@ -667,6 +673,10 @@ SmacPlannerHybrid::dynamicParametersCallback(std::vector<rclcpp::Parameter> para
       }
     } else if (type == ParameterType::PARAMETER_STRING) {
       if (name == _name + ".motion_model_for_search") {
+        RCLCPP_WARN(
+            _logger,
+            "HybridAstar: Motion model updating: '%s', to '%s' ",
+            _motion_model_for_search.c_str(), parameter.as_string().c_str());
         reinit_a_star = true;
         _motion_model = fromString(parameter.as_string());
         if (_motion_model == MotionModel::UNKNOWN) {

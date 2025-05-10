@@ -74,6 +74,7 @@ void AStarAlgorithm<NodeT>::initialize(
   if (!_is_initialized) {
     NodeT::precomputeDistanceHeuristic(lookup_table_size, _motion_model, dim_3_size, _search_info);
   }
+  printSearchInfo(_search_info);
   _is_initialized = true;
   _dim3_size = dim_3_size;
   _expander = std::make_unique<AnalyticExpansion<NodeT>>(
@@ -264,6 +265,13 @@ bool AStarAlgorithm<NodeT>::createPath(
   std::function<bool()> cancel_checker,
   std::vector<std::tuple<float, float, float>> * expansions_log)
 {
+  std::cout << "Astar: Motion Model: " << toString(_motion_model).c_str() << std::endl;
+  std::cout << "Astar: Expander address: " << _expander.get() << std::endl; 
+  std::cout << "Astar: Graph size: " << _graph.size() << std::endl; 
+  std::cout << "Astar: Queue size: " << _queue.size() << std::endl; 
+  std::cout << "Astar: Collision Checker address : " << _collision_checker << std::endl; 
+  printSearchInfo(_search_info);
+
   steady_clock::time_point start_time = steady_clock::now();
   _tolerance = tolerance;
   _best_heuristic_node = {std::numeric_limits<float>::max(), 0};

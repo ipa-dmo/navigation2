@@ -460,9 +460,11 @@ void NodeHybrid::initMotionModel(
   // find the motion model selected
   switch (motion_model) {
     case MotionModel::DUBIN:
+      std::cout << "Node Hybrid: Init Dubin" << std::endl;
       motion_table.initDubin(size_x, size_y, num_angle_quantization, search_info);
       break;
     case MotionModel::REEDS_SHEPP:
+      std::cout << "Node Hybrid: Init RS" << std::endl;
       motion_table.initReedsShepp(size_x, size_y, num_angle_quantization, search_info);
       break;
     default:
@@ -888,7 +890,7 @@ bool NodeHybrid::backtracePath(CoordinateVector & path)
   path.push_back(current_node->pose);
   // Convert angle to radians
   path.back().theta = NodeHybrid::motion_table.getAngleFromBin(path.back().theta);
-
+  std::cout << "MotionTable: " << toString(motion_table.motion_model).c_str() << std::endl;
   return true;
 }
 

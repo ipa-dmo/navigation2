@@ -266,7 +266,7 @@ bool AStarAlgorithm<NodeT>::createPath(
   std::vector<std::tuple<float, float, float>> * expansions_log)
 {
   std::cout << "Astar: Motion Model: " << toString(_motion_model).c_str() << std::endl;
-  std::cout << "Astar: Expander address: " << _expander.get() << std::endl; 
+  std::cout << "Astar: Expander address: " << _expander.get() << std::endl;
   std::cout << "Astar: Graph size: " << _graph.size() << std::endl; 
   std::cout << "Astar: Queue size: " << _queue.size() << std::endl; 
   std::cout << "Astar: Collision Checker address : " << _collision_checker << std::endl; 
@@ -326,7 +326,6 @@ bool AStarAlgorithm<NodeT>::createPath(
 
     // 1) Pick Nbest from O s.t. min(f(Nbest)), remove from queue
     current_node = getNextNode();
-
     // Save current node coordinates for debug
     if (expansions_log) {
       populateExpansionsLog(current_node, expansions_log);

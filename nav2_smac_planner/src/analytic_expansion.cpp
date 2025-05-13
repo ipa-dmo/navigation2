@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License. Reserved.
 
+#include <iostream>
 #include <ompl/base/ScopedState.h>
 #include <ompl/base/spaces/DubinsStateSpace.h>
 #include <ompl/base/spaces/ReedsSheppStateSpace.h>
@@ -21,6 +22,7 @@
 #include <memory>
 
 #include "nav2_smac_planner/analytic_expansion.hpp"
+#include "nav2_smac_planner/constants.hpp"
 
 namespace nav2_smac_planner
 {
@@ -52,6 +54,7 @@ typename AnalyticExpansion<NodeT>::NodePtr AnalyticExpansion<NodeT>::tryAnalytic
   const NodeGetter & getter, int & analytic_iterations,
   int & closest_distance)
 {
+  std::cout << "Expansion motion model: " << toString(_motion_model).c_str() << std::endl;
   // This must be a valid motion model for analytic expansion to be attempted
   if (_motion_model == MotionModel::DUBIN || _motion_model == MotionModel::REEDS_SHEPP ||
     _motion_model == MotionModel::STATE_LATTICE)
